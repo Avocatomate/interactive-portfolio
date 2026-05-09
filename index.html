@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raymond Borja — AI Automation Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:        #080809;
+  --s1:           #111114;
+  --s2:           #1a1a1f;
+  --s3:           #242429;
+  --border:       rgba(255,255,255,0.07);
+  --txt:          #eeeef2;
+  --txt2:         #9090a0;
+  --txt3:         #55555f;
+  --cyan:         #00d4ff;
+  --cyan-dim:     rgba(0,212,255,0.10);
+  --cyan-border:  rgba(0,212,255,0.22);
+  --coral:        #ff6b47;
+  --coral-dim:    rgba(255,107,71,0.10);
+  --fd: 'Syne', sans-serif;
+  --fb: 'Outfit', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--black);color:var(--txt);line-height:1.6;overflow-x:hidden}
+
+/* noise overlay */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:900;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+
+h1,h2,h3,h4{font-family:var(--fd);font-weight:700;letter-spacing:-.02em}
+.mono{font-family:var(--fm)}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 2rem}
+section{padding:7rem 0}
+
+/* ── REVEAL ANIMATION ── */
+.rev{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.rev.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:1.2rem 0;transition:background .3s,backdrop-filter .3s}
+nav.scrolled{background:rgba(8,8,9,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--txt);text-decoration:none;letter-spacing:-.03em}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--fm);font-size:.72rem;color:var(--txt2);text-decoration:none;letter-spacing:.05em;transition:color .2s}
+.nav-links a:hover{color:var(--txt)}
+.nav-hire{font-family:var(--fm);font-size:.72rem;padding:.45rem 1.2rem;border:1px solid var(--cyan);color:var(--cyan);text-decoration:none;letter-spacing:.05em;transition:background .2s,color .2s}
+.nav-hire:hover{background:var(--cyan);color:var(--black)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.25rem}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--txt);transition:.3s}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(8,8,9,.97);z-index:850;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:var(--fd);font-size:1.6rem;color:var(--txt);text-decoration:none}
+.mob-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--txt);font-size:1.5rem;cursor:pointer}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0}
+.hero-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);
+  background-size:58px 58px;
+  mask-image:radial-gradient(ellipse 75% 75% at 60% 40%,black 30%,transparent 100%)}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none}
+.g1{width:500px;height:500px;background:rgba(0,212,255,.06);top:-80px;right:-60px}
+.g2{width:380px;height:380px;background:rgba(255,107,71,.05);bottom:-60px;left:25%}
+.hero-body{position:relative;z-index:2;width:100%;padding:8rem 0 5rem}
+.hero-cols{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;color:var(--cyan);
+  border:1px solid var(--cyan-border);background:var(--cyan-dim);padding:.32rem .75rem;margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .6s ease forwards .2s}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%}
+.hero-tag::after{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:pulse 2s infinite}
+h1.hero-h{font-size:clamp(2.6rem,5vw,4.4rem);line-height:1.0;font-weight:800;margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .6s ease forwards .35s}
+h1.hero-h .c{color:var(--cyan)}
+.hero-p{font-size:1.05rem;color:var(--txt2);max-width:480px;line-height:1.78;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .6s ease forwards .5s}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .6s ease forwards .65s}
+.btn-p{display:inline-flex;align-items:center;gap:.45rem;padding:.85rem 2rem;background:var(--cyan);color:var(--black);
+  font-family:var(--fd);font-weight:700;font-size:.88rem;text-decoration:none;letter-spacing:.02em;
+  transition:transform .2s,box-shadow .2s}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.28)}
+.btn-s{display:inline-flex;align-items:center;gap:.45rem;padding:.85rem 2rem;border:1px solid var(--border);
+  color:var(--txt);font-family:var(--fd);font-weight:600;font-size:.88rem;text-decoration:none;
+  transition:border-color .2s,background .2s}
+.btn-s:hover{border-color:var(--txt3);background:var(--s1)}
+.hero-vis{display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn .8s ease forwards .8s}
+.hero-vis svg{width:100%;max-width:460px}
+.hero-foot{position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border)}
+.hero-stats{display:flex;gap:3rem;padding:2rem 0;opacity:0;animation:fadeUp .6s ease forwards .9s}
+.stat-n{font-family:var(--fd);font-size:2rem;font-weight:800;letter-spacing:-.03em}
+.stat-n em{color:var(--cyan);font-style:normal}
+.stat-l{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-top:.15rem}
+
+/* ── SECTION HEADER ── */
+.sh-num{font-family:var(--fm);font-size:.62rem;color:var(--txt3);letter-spacing:.1em;display:flex;align-items:center;gap:.75rem;margin-bottom:3rem}
+.sh-num::after{content:'';flex:1;height:1px;background:var(--border);max-width:80px}
+.sh-label{font-family:var(--fm);font-size:.68rem;letter-spacing:.15em;color:var(--cyan);text-transform:uppercase;display:block;margin-bottom:.65rem}
+.sh-title{font-size:clamp(1.9rem,3.8vw,2.9rem);line-height:1.1;margin-bottom:1rem}
+.sh-sub{font-size:1rem;color:var(--txt2);max-width:520px;line-height:1.75}
+
+/* ── ABOUT ── */
+#about{background:var(--s1)}
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:start}
+.about-card{background:var(--s2);border:1px solid var(--border);padding:2.25rem;position:relative}
+.about-card::before{content:'';position:absolute;top:0;left:0;width:36px;height:2px;background:var(--cyan)}
+.a-name{font-family:var(--fd);font-size:1.45rem;font-weight:700;margin-bottom:.35rem}
+.a-role{font-family:var(--fm);font-size:.68rem;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.35rem}
+.a-meta{display:flex;flex-direction:column;gap:.55rem}
+.a-row{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--txt2)}
+.a-icon{width:26px;height:26px;background:var(--s3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;flex-shrink:0}
+.a-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--cyan-dim);border:1px solid var(--cyan-border);
+  color:var(--cyan);font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;padding:.28rem .7rem;margin-top:1.35rem}
+.highlights{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.hl{background:var(--s2);border:1px solid var(--border);padding:1.2rem;border-left:2px solid var(--cyan)}
+.hl-n{font-family:var(--fd);font-size:1.5rem;font-weight:800;color:var(--cyan);letter-spacing:-.03em;margin-bottom:.2rem}
+.hl-l{font-size:.78rem;color:var(--txt3)}
+.about-text{display:flex;flex-direction:column;gap:1.4rem}
+.about-text p{font-size:.97rem;color:var(--txt2);line-height:1.8}
+.about-text strong{color:var(--txt)}
+
+/* ── SKILLS ── */
+#skills{background:var(--black)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.sk-group{background:var(--s1);border:1px solid var(--border);padding:2rem;transition:border-color .3s;position:relative;overflow:hidden}
+.sk-group:hover{border-color:var(--cyan-border)}
+.sk-group::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),transparent);opacity:0;transition:opacity .3s}
+.sk-group:hover::after{opacity:1}
+.sk-icon{width:38px;height:38px;background:var(--cyan-dim);border:1px solid var(--cyan-border);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:1.1rem}
+.sk-group h3{font-size:.92rem;font-weight:600;margin-bottom:.9rem;color:var(--txt)}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.sk-tag{font-family:var(--fm);font-size:.6rem;letter-spacing:.04em;padding:.28rem .55rem;
+  background:var(--s2);border:1px solid var(--border);color:var(--txt2);transition:border-color .2s,color .2s}
+.sk-tag:hover{border-color:var(--cyan-border);color:var(--cyan)}
+
+/* ── SERVICES ── */
+#services{background:var(--s1)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);border:1px solid var(--border)}
+.svc-card{background:var(--black);padding:2.25rem;position:relative;overflow:hidden;transition:background .3s}
+.svc-card:hover{background:var(--s1)}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--cyan),transparent);opacity:0;transition:opacity .3s}
+.svc-card:hover::before{opacity:1}
+.svc-num{font-family:var(--fm);font-size:.6rem;color:var(--txt3);letter-spacing:.1em;margin-bottom:1.25rem}
+.svc-icon{font-size:1.4rem;margin-bottom:.85rem}
+.svc-card h3{font-size:.97rem;font-weight:700;margin-bottom:.65rem;color:var(--txt)}
+.svc-card p{font-size:.85rem;color:var(--txt2);line-height:1.7}
+.svc-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem}
+.svc-tag{font-family:var(--fm);font-size:.58rem;padding:.22rem .5rem;background:var(--s2);color:var(--txt3);border:1px solid var(--border)}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--black)}
+.exp-layout{display:grid;grid-template-columns:180px 1fr;gap:5rem}
+.exp-nav{position:sticky;top:6rem;height:fit-content}
+.exp-nav-list{list-style:none;display:flex;flex-direction:column}
+.enl{font-family:var(--fm);font-size:.68rem;letter-spacing:.05em;padding:.7rem 1rem;
+  border-left:1px solid var(--border);color:var(--txt3);cursor:pointer;transition:color .2s,border-color .2s}
+.enl.active{border-left-color:var(--cyan);color:var(--cyan)}
+.exp-timeline{display:flex;flex-direction:column}
+.exp-item{padding:2.25rem 0;border-bottom:1px solid var(--border)}
+.exp-item:first-child{padding-top:0}
+.exp-period{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;color:var(--coral);text-transform:uppercase;margin-bottom:.65rem}
+.exp-item h3{font-size:1.15rem;font-weight:700;margin-bottom:.2rem}
+.exp-co{font-family:var(--fm);font-size:.7rem;color:var(--txt3);letter-spacing:.04em;margin-bottom:1.1rem}
+.exp-list{display:flex;flex-direction:column;gap:.55rem}
+.exp-list li{font-size:.88rem;color:var(--txt2);line-height:1.65;list-style:none;padding-left:1.1rem;position:relative}
+.exp-list li::before{content:'→';position:absolute;left:0;color:var(--cyan);font-size:.72rem}
+.exp-projs{margin-top:1.1rem;padding:1.1rem;background:var(--s1);border:1px solid var(--border)}
+.ep-title{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase;margin-bottom:.65rem}
+.ep-list{display:flex;flex-wrap:wrap;gap:.45rem}
+.ep-item{font-family:var(--fm);font-size:.62rem;padding:.25rem .55rem;background:var(--s2);border:1px solid var(--border);color:var(--txt2)}
+
+/* ── CERTIFICATIONS ── */
+#certifications{background:var(--s1)}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.cert-card{background:var(--black);border:1px solid var(--border);padding:1.85rem;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s}
+.cert-card:hover{border-color:var(--cyan-border);transform:translateY(-4px)}
+.cert-card::after{content:'';position:absolute;top:0;right:0;width:55px;height:55px;
+  background:radial-gradient(circle at top right,rgba(0,212,255,.08),transparent 70%)}
+.cert-issuer{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;color:var(--cyan);text-transform:uppercase;margin-bottom:.65rem}
+.cert-card h3{font-size:.92rem;font-weight:700;margin-bottom:.9rem;line-height:1.35}
+.cert-skills{display:flex;flex-direction:column;gap:.38rem;margin-bottom:1.1rem}
+.cert-skill{font-size:.78rem;color:var(--txt2);padding-left:.65rem;border-left:1px solid var(--border)}
+.cert-date{font-family:var(--fm);font-size:.6rem;color:var(--txt3);letter-spacing:.08em}
+.cert-badge{position:absolute;top:1.35rem;right:1.35rem;width:32px;height:32px;background:var(--cyan-dim);
+  border:1px solid var(--cyan-border);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+
+/* ── PROJECTS ── */
+#projects{background:var(--black)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+.proj-card{background:var(--s1);border:1px solid var(--border);padding:2.25rem;
+  display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s}
+.proj-card:hover{border-color:var(--cyan-border)}
+.proj-card.feat{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.proj-type{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;color:var(--coral);text-transform:uppercase;margin-bottom:.55rem}
+.proj-card h3{font-size:1.05rem;font-weight:700;line-height:1.25;margin-bottom:1rem}
+.proj-card p{font-size:.86rem;color:var(--txt2);line-height:1.72;flex:1}
+.proj-feats{margin:1.1rem 0;display:flex;flex-direction:column;gap:.38rem}
+.proj-feat{font-size:.82rem;color:var(--txt2);padding-left:.85rem;position:relative}
+.proj-feat::before{content:'·';position:absolute;left:0;color:var(--cyan);font-size:1.1rem;line-height:.85}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:auto;padding-top:1.25rem;border-top:1px solid var(--border)}
+.stack-tag{font-family:var(--fm);font-size:.58rem;padding:.22rem .5rem;border:1px solid var(--border);color:var(--txt3)}
+.proj-vis{background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;
+  justify-content:center;min-height:220px;position:relative;overflow:hidden}
+.proj-vis::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);
+  background-size:28px 28px}
+
+/* ── CONTACT ── */
+#contact{background:var(--s1);position:relative;overflow:hidden}
+#contact::before{content:'';position:absolute;width:550px;height:550px;
+  background:radial-gradient(circle,rgba(0,212,255,.04),transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contact-hl{font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:800;line-height:1.1;margin-bottom:1rem}
+.contact-hl em{color:var(--cyan);font-style:normal}
+.contact-sub{font-size:.97rem;color:var(--txt2);line-height:1.75;margin-bottom:2.25rem}
+.c-links{display:flex;flex-direction:column;gap:.85rem}
+.c-link{display:flex;align-items:center;gap:.85rem;text-decoration:none;
+  padding:.85rem 1.1rem;background:var(--black);border:1px solid var(--border);transition:border-color .2s}
+.c-link:hover{border-color:var(--cyan-border)}
+.c-icon{width:34px;height:34px;background:var(--s2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0}
+.c-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase;display:block}
+.c-val{font-size:.88rem;color:var(--txt);display:block}
+.cf{display:flex;flex-direction:column;gap:1.1rem}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fl{font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase}
+.fi,.ft{width:100%;padding:.8rem .95rem;background:var(--black);border:1px solid var(--border);
+  color:var(--txt);font-family:var(--fb);font-size:.9rem;outline:none;transition:border-color .2s;resize:none}
+.fi:focus,.ft:focus{border-color:var(--cyan-border)}
+.fi::placeholder,.ft::placeholder{color:var(--txt3)}
+.ft{min-height:130px}
+.btn-send{padding:.88rem 2rem;background:var(--cyan);color:var(--black);font-family:var(--fd);
+  font-weight:700;font-size:.9rem;border:none;cursor:pointer;letter-spacing:.02em;
+  transition:transform .2s,box-shadow .2s;align-self:flex-start}
+.btn-send:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.28)}
+
+/* ── FOOTER ── */
+footer{background:var(--black);border-top:1px solid var(--border);padding:1.85rem 0}
+.foot-inner{display:flex;align-items:center;justify-content:space-between}
+.foot-copy{font-family:var(--fm);font-size:.62rem;color:var(--txt3);letter-spacing:.05em}
+.foot-links{display:flex;gap:1.5rem}
+.foot-links a{font-family:var(--fm);font-size:.62rem;color:var(--txt3);text-decoration:none;
+  letter-spacing:.05em;transition:color .2s}
+.foot-links a:hover{color:var(--cyan)}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero-cols{grid-template-columns:1fr}.hero-vis{display:none}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .exp-layout{grid-template-columns:1fr}.exp-nav{display:none}
+  .certs-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:768px){
+  section{padding:5rem 0}.wrap{padding:0 1.5rem}
+  .nav-links,.nav-hire{display:none}.nav-burger{display:flex}
+  .hero-stats{gap:1.5rem;flex-wrap:wrap}
+  .skills-grid,.svc-grid,.certs-grid,.proj-grid{grid-template-columns:1fr}
+  .proj-card.feat{grid-column:span 1;grid-template-columns:1fr}
+  .proj-vis{min-height:160px}
+  .highlights{grid-template-columns:1fr}
+  .foot-inner{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">RB<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+    <a href="#contact" class="nav-hire">Hire Me</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">✕</button>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <div class="hero-body">
+    <div class="wrap hero-cols">
+      <!-- LEFT -->
+      <div>
+        <div class="hero-tag">Available for Projects</div>
+        <h1 class="hero-h">
+          Engineering <span class="c">Intelligence</span><br>
+          Into Every Workflow.
+        </h1>
+        <p class="hero-p">
+          Civil Engineer turned AI Automation Specialist. I design and build AI-powered systems — chatbots, appointment setters, lead pipelines, and full business automation — that run reliably 24/7.
+        </p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-p">Hire Me →</a>
+          <a href="#projects" class="btn-s">View My Work</a>
+        </div>
+      </div>
+      <!-- DIAGRAM -->
+      <div class="hero-vis">
+        <svg viewBox="0 0 460 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hg" width="28" height="28" patternUnits="userSpaceOnUse">
+              <path d="M28 0L0 0 0 28" fill="none" stroke="rgba(0,212,255,.06)" stroke-width=".5"/>
+            </pattern>
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6Z" fill="rgba(0,212,255,.55)"/>
+            </marker>
+          </defs>
+          <rect width="460" height="360" fill="url(#hg)"/>
+          <!-- label -->
+          <text x="20" y="28" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(0,212,255,.22)" letter-spacing="2">AI AUTOMATION FLOW</text>
+          <line x1="20" y1="34" x2="440" y2="34" stroke="rgba(0,212,255,.07)" stroke-width=".5"/>
+          <!-- node: trigger -->
+          <rect x="20" y="140" width="105" height="46" rx="2" fill="rgba(0,212,255,.08)" stroke="rgba(0,212,255,.38)" stroke-width="1"/>
+          <text x="72" y="158" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#00d4ff">TRIGGER</text>
+          <text x="72" y="173" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(0,212,255,.58)">Webhook / FB Msg</text>
+          <!-- arrow -->
+          <line x1="125" y1="163" x2="175" y2="163" stroke="rgba(0,212,255,.38)" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+          <!-- node: AI agent -->
+          <rect x="175" y="128" width="108" height="70" rx="2" fill="rgba(0,212,255,.12)" stroke="rgba(0,212,255,.6)" stroke-width="1.5"/>
+          <text x="229" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#00d4ff">AI AGENT</text>
+          <text x="229" y="164" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(0,212,255,.65)">OpenAI GPT-4</text>
+          <circle cx="229" cy="182" r="3" fill="rgba(0,212,255,.7)">
+            <animate attributeName="opacity" values="1;.3;1" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+          <text x="237" y="186" font-family="JetBrains Mono,monospace" font-size="5.5" fill="rgba(0,212,255,.45)">processing</text>
+          <!-- arrows out -->
+          <line x1="283" y1="148" x2="336" y2="100" stroke="rgba(0,212,255,.28)" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+          <line x1="283" y1="163" x2="346" y2="163" stroke="rgba(0,212,255,.38)" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+          <line x1="283" y1="178" x2="336" y2="235" stroke="rgba(0,212,255,.28)" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+          <!-- node: calendar -->
+          <rect x="336" y="72" width="104" height="46" rx="2" fill="rgba(255,107,71,.08)" stroke="rgba(255,107,71,.35)" stroke-width="1"/>
+          <text x="388" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#ff6b47">CALENDAR</text>
+          <text x="388" y="105" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(255,107,71,.58)">Google Cal API</text>
+          <!-- node: reply -->
+          <rect x="346" y="140" width="104" height="46" rx="2" fill="rgba(0,212,255,.08)" stroke="rgba(0,212,255,.35)" stroke-width="1"/>
+          <text x="398" y="158" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#00d4ff">AUTO-REPLY</text>
+          <text x="398" y="173" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(0,212,255,.55)">FB / Email</text>
+          <!-- node: sheets -->
+          <rect x="336" y="218" width="104" height="46" rx="2" fill="rgba(255,107,71,.08)" stroke="rgba(255,107,71,.35)" stroke-width="1"/>
+          <text x="388" y="236" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#ff6b47">CRM / SHEETS</text>
+          <text x="388" y="251" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(255,107,71,.55)">Log &amp; Track</text>
+          <!-- status -->
+          <circle cx="24" cy="336" r="4" fill="rgba(0,212,255,.8)">
+            <animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="34" y="340" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(0,212,255,.45)">workflow active</text>
+          <text x="440" y="340" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="6.5" fill="rgba(255,255,255,.13)">n8n · make.com · zapier</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="wrap">
+      <div class="hero-stats">
+        <div><div class="stat-n">10<em>+</em></div><div class="stat-l">Years Experience</div></div>
+        <div><div class="stat-n">3<em>+</em></div><div class="stat-l">AI Systems Built</div></div>
+        <div><div class="stat-n">3</div><div class="stat-l">Certifications</div></div>
+        <div><div class="stat-n">Licensed</div><div class="stat-l">Civil Engineer</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sh-num rev">01 / About</div>
+    <div class="about-grid">
+      <div class="rev">
+        <div class="about-card">
+          <div class="a-name">Raymond Borja</div>
+          <div class="a-role">AI Automation Specialist · Civil Engineer</div>
+          <div class="a-meta">
+            <div class="a-row"><div class="a-icon">📍</div> Philippines</div>
+            <div class="a-row"><div class="a-icon">✉</div> Raymondborja21@gmail.com</div>
+            <div class="a-row"><div class="a-icon">📱</div> +63 927-066-4056</div>
+            <div class="a-row"><div class="a-icon">🔗</div> linkedin.com/in/raymond-borja-2bb4a5255</div>
+          </div>
+          <div class="a-badge">✓ Available for Projects</div>
+        </div>
+        <div class="highlights">
+          <div class="hl"><div class="hl-n">10+</div><div class="hl-l">Years in Engineering & PM</div></div>
+          <div class="hl"><div class="hl-n">2026</div><div class="hl-l">AI Automation Transition</div></div>
+        </div>
+      </div>
+      <div class="about-text rev d2">
+        <div>
+          <span class="sh-label">About Me</span>
+          <h2 class="sh-title">Precision Engineering<br>Meets Intelligent Automation.</h2>
+        </div>
+        <p>I'm a <strong>Licensed Civil Engineer</strong> with over a decade managing large-scale infrastructure projects — bridges, ports, hotels, and commercial buildings across Palawan, Philippines. That career built something invaluable: <strong>systems thinking, process discipline, and the ability to make complex operations run smoothly under pressure.</strong></p>
+        <p>Now I apply that same precision to AI Automation. I build intelligent workflow systems using <strong>n8n, Make.com, and Zapier</strong> — integrating OpenAI, Google Workspace, Meta platforms, and custom APIs to automate the operations that drain time from growing businesses.</p>
+        <p>Whether it's an <strong>AI chatbot receptionist</strong> that handles appointments around the clock, a <strong>lead capture pipeline</strong> that qualifies inquiries before a human sees them, or a <strong>custom workflow</strong> connecting your CRM, calendar, and email — I engineer solutions that work reliably, scale cleanly, and free you to focus on growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sh-num rev">02 / Skills</div>
+    <div class="rev" style="margin-bottom:3rem">
+      <span class="sh-label">Core Competencies</span>
+      <h2 class="sh-title">Built Across Two Disciplines.</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="sk-group rev d1">
+        <div class="sk-icon">⚡</div>
+        <h3>AI &amp; Automation</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">n8n</span><span class="sk-tag">Make.com</span><span class="sk-tag">Zapier</span>
+          <span class="sk-tag">AI Chatbot Dev</span><span class="sk-tag">AI Receptionist</span>
+          <span class="sk-tag">OpenAI / ChatGPT API</span><span class="sk-tag">Prompt Engineering</span>
+          <span class="sk-tag">API Integration</span><span class="sk-tag">Webhooks</span>
+          <span class="sk-tag">CRM Automation</span><span class="sk-tag">Lead Gen Automation</span>
+        </div>
+      </div>
+      <div class="sk-group rev d2">
+        <div class="sk-icon">🔗</div>
+        <h3>Platforms &amp; Tools</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">Google Calendar API</span><span class="sk-tag">Google Sheets</span>
+          <span class="sk-tag">Gmail Automation</span><span class="sk-tag">Facebook Messenger</span>
+          <span class="sk-tag">Instagram DM</span><span class="sk-tag">Meta Webhooks</span>
+          <span class="sk-tag">HTTP Requests</span><span class="sk-tag">JSON Handling</span>
+          <span class="sk-tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="sk-group rev d3">
+        <div class="sk-icon">⚙</div>
+        <h3>Technical Workflow</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">Workflow Design</span><span class="sk-tag">Process Automation</span>
+          <span class="sk-tag">Data Mapping</span><span class="sk-tag">Error Handling</span>
+          <span class="sk-tag">Filters &amp; Conditions</span><span class="sk-tag">Branching Logic</span>
+          <span class="sk-tag">AI Agent Integration</span><span class="sk-tag">Automation Architecture</span>
+        </div>
+      </div>
+      <div class="sk-group rev d1">
+        <div class="sk-icon">🏗</div>
+        <h3>Engineering &amp; PM</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">Project Management</span><span class="sk-tag">Construction Management</span>
+          <span class="sk-tag">Billing Documentation</span><span class="sk-tag">Quality Inspection</span>
+          <span class="sk-tag">AutoCAD</span><span class="sk-tag">MS Project</span>
+          <span class="sk-tag">Bluebeam</span><span class="sk-tag">Planswift</span>
+        </div>
+      </div>
+      <div class="sk-group rev d2" style="grid-column:span 2">
+        <div class="sk-icon">🌐</div>
+        <h3>Languages</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">English</span><span class="sk-tag">Filipino</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="sh-num rev">03 / Services</div>
+    <div class="rev" style="margin-bottom:3rem">
+      <span class="sh-label">What I Build</span>
+      <h2 class="sh-title">Automation Systems<br>That Work 24/7.</h2>
+      <p class="sh-sub">Every service is engineered to save time, cut manual work, and let your business scale without adding headcount.</p>
+    </div>
+    <div class="svc-grid rev">
+      <div class="svc-card">
+        <div class="svc-num">01</div>
+        <div class="svc-icon">🤖</div>
+        <h3>AI Chatbot Receptionist</h3>
+        <p>Deploy an intelligent AI receptionist on Facebook, Instagram, or your website. It handles inquiries, answers FAQs, and routes conversations — around the clock, without intervention.</p>
+        <div class="svc-tags"><span class="svc-tag">n8n</span><span class="svc-tag">OpenAI</span><span class="svc-tag">Meta API</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">02</div>
+        <div class="svc-icon">📅</div>
+        <h3>AI Appointment Setter</h3>
+        <p>Automated booking systems that check live availability, schedule appointments, send confirmations, and handle rescheduling — no manual steps required.</p>
+        <div class="svc-tags"><span class="svc-tag">Google Calendar</span><span class="svc-tag">n8n</span><span class="svc-tag">OpenAI</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">03</div>
+        <div class="svc-icon">⚡</div>
+        <h3>Workflow Automation</h3>
+        <p>End-to-end business process automation connecting your tools and platforms — eliminating manual data entry, reducing errors, and saving hours every single week.</p>
+        <div class="svc-tags"><span class="svc-tag">n8n</span><span class="svc-tag">Make.com</span><span class="svc-tag">Zapier</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">04</div>
+        <div class="svc-icon">🎯</div>
+        <h3>Lead Generation Automation</h3>
+        <p>Capture, qualify, and respond to leads automatically. Incoming inquiries get logged, scored, and followed up before a human even sees the notification.</p>
+        <div class="svc-tags"><span class="svc-tag">Webhooks</span><span class="svc-tag">Google Sheets</span><span class="svc-tag">CRM</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">05</div>
+        <div class="svc-icon">📊</div>
+        <h3>CRM &amp; Sheets Automation</h3>
+        <p>Sync customer data, automate data entry into spreadsheets or CRM systems, and generate automated reports — no manual copy-paste, ever.</p>
+        <div class="svc-tags"><span class="svc-tag">Google Sheets</span><span class="svc-tag">REST APIs</span><span class="svc-tag">Data Mapping</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">06</div>
+        <div class="svc-icon">✉</div>
+        <h3>Email &amp; Calendar Automation</h3>
+        <p>Automated Gmail workflows, follow-up sequences, calendar integrations, and notification systems that keep your team and clients perfectly in sync.</p>
+        <div class="svc-tags"><span class="svc-tag">Gmail API</span><span class="svc-tag">Google Calendar</span><span class="svc-tag">n8n</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sh-num rev">04 / Experience</div>
+    <div class="rev" style="margin-bottom:3.5rem">
+      <span class="sh-label">Professional History</span>
+      <h2 class="sh-title">10+ Years of Building<br>Systems That Deliver.</h2>
+    </div>
+    <div class="exp-layout">
+      <div class="exp-nav">
+        <ul class="exp-nav-list">
+          <li class="enl active">AI Automation</li>
+          <li class="enl">Civil Engineering</li>
+        </ul>
+      </div>
+      <div class="exp-timeline">
+        <div class="exp-item rev">
+          <div class="exp-period">2026 — Present</div>
+          <h3>AI Automation Specialist</h3>
+          <div class="exp-co">Independent / Freelance — Philippines</div>
+          <ul class="exp-list">
+            <li>Designing and deploying AI-powered workflow automations for business clients using n8n, Make.com, and Zapier</li>
+            <li>Building AI chatbot and receptionist systems integrated with Facebook Messenger, Instagram DM, and OpenAI</li>
+            <li>Developing appointment booking systems connected to Google Calendar with automated confirmations and rescheduling</li>
+            <li>Creating lead generation pipelines that capture, qualify, and respond to inquiries automatically</li>
+            <li>Integrating REST APIs, webhooks, and Google Workspace into scalable automation architectures</li>
+          </ul>
+        </div>
+        <div class="exp-item rev d2">
+          <div class="exp-period">2014 — Present</div>
+          <h3>Project Manager / Civil Engineer</h3>
+          <div class="exp-co">Various Construction Projects — Philippines</div>
+          <ul class="exp-list">
+            <li>Managed large-scale infrastructure and construction projects including bridges, ports, hotels, and commercial buildings across Palawan</li>
+            <li>Coordinated subcontractors, project schedules, and multi-discipline workflows for concurrent projects</li>
+            <li>Prepared bidding documentation, billing statements, and progress reports for government and private clients</li>
+            <li>Conducted quality inspections and material evaluations ensuring compliance with engineering standards</li>
+            <li>Supervised full project execution from mobilization through final handover and reporting</li>
+          </ul>
+          <div class="exp-projs">
+            <div class="ep-title">Major Projects</div>
+            <div class="ep-list">
+              <span class="ep-item">Buliluyan Port — Bataraza, Palawan</span>
+              <span class="ep-item">Babuyan Bridge — Puerto Princesa</span>
+              <span class="ep-item">Tanatanaen Bridge — Dumaran</span>
+              <span class="ep-item">4-Storey Hotel Construction</span>
+              <span class="ep-item">Solar Street Light Projects</span>
+              <span class="ep-item">Commercial &amp; Residential Buildings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="wrap">
+    <div class="sh-num rev">05 / Certifications</div>
+    <div class="rev" style="margin-bottom:3rem">
+      <span class="sh-label">Credentials</span>
+      <h2 class="sh-title">Certified. Trained. Ready.</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card rev d1">
+        <div class="cert-badge">⚡</div>
+        <div class="cert-issuer">Technical Virtual Assistants PH</div>
+        <h3>AI Automation with n8n</h3>
+        <div class="cert-skills">
+          <div class="cert-skill">AI Agents vs AI Workflows</div>
+          <div class="cert-skill">n8n Server Setup &amp; Node Management</div>
+          <div class="cert-skill">Triggers, Actions &amp; API Integrations</div>
+          <div class="cert-skill">AI Agent Connections</div>
+          <div class="cert-skill">Data Processing &amp; Automation</div>
+        </div>
+        <div class="cert-date">Completed: April 29, 2026</div>
+      </div>
+      <div class="cert-card rev d2">
+        <div class="cert-badge">🔄</div>
+        <div class="cert-issuer">Technical Virtual Assistants PH</div>
+        <h3>No Code Automation with Make.com</h3>
+        <div class="cert-skills">
+          <div class="cert-skill">Make.com Interface &amp; Scenario Structures</div>
+          <div class="cert-skill">Triggers, Filters &amp; Connecting Apps</div>
+          <div class="cert-skill">Actions &amp; HTTP Requests</div>
+          <div class="cert-skill">Error Handling &amp; Debugging</div>
+        </div>
+        <div class="cert-date">Completed: April 3, 2026</div>
+      </div>
+      <div class="cert-card rev d3">
+        <div class="cert-badge">⚙</div>
+        <div class="cert-issuer">Technical Virtual Assistants PH</div>
+        <h3>No Code Automation with Zapier</h3>
+        <div class="cert-skills">
+          <div class="cert-skill">Zapier Interface, Triggers &amp; Filters</div>
+          <div class="cert-skill">Formatter by Zapier &amp; Delay / Paths</div>
+          <div class="cert-skill">Webhooks &amp; AI by Zapier</div>
+          <div class="cert-skill">Sub-Zaps &amp; Looping</div>
+        </div>
+        <div class="cert-date">Completed: March 28, 2026</div>
+      </div>
+      <div class="cert-card rev d1">
+        <div class="cert-badge">🎓</div>
+        <div class="cert-issuer">Philippines</div>
+        <h3>BS Civil Engineering — Licensed</h3>
+        <div class="cert-skills">
+          <div class="cert-skill">Licensed Civil Engineer</div>
+          <div class="cert-skill">10+ Years Active Engineering Practice</div>
+        </div>
+        <div class="cert-date">Licensed Professional</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sh-num rev">06 / Projects</div>
+    <div class="rev" style="margin-bottom:3rem">
+      <span class="sh-label">Selected Work</span>
+      <h2 class="sh-title">Systems Built.<br>Problems Solved.</h2>
+    </div>
+    <div class="proj-grid">
+
+      <!-- FEATURED -->
+      <div class="proj-card feat rev">
+        <div>
+          <div class="proj-type">AI Receptionist · Featured Project</div>
+          <h3>AI Dental Clinic Receptionist &amp; Appointment Setter</h3>
+          <p>A fully automated AI receptionist for a dental clinic. Patients interact via Facebook Messenger — the AI handles the entire flow: checks availability, books appointments, sends email confirmations, and manages rescheduling or cancellations without any human involvement.</p>
+          <div class="proj-feats">
+            <div class="proj-feat">Real-time schedule checking via Google Calendar API</div>
+            <div class="proj-feat">Automated appointment booking, rescheduling &amp; cancellation</div>
+            <div class="proj-feat">AI-powered customer support and FAQ handling</div>
+            <div class="proj-feat">Automated email confirmations via Gmail</div>
+            <div class="proj-feat">Patient data logged to Google Sheets automatically</div>
+          </div>
+          <div class="proj-stack">
+            <span class="stack-tag">n8n</span><span class="stack-tag">OpenAI GPT-4</span>
+            <span class="stack-tag">Google Calendar API</span><span class="stack-tag">Google Sheets</span>
+            <span class="stack-tag">Facebook Messenger</span><span class="stack-tag">Gmail API</span>
+          </div>
+        </div>
+        <div class="proj-vis">
+          <svg viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;position:relative;z-index:1">
+            <rect x="20" y="18" width="150" height="32" rx="14" fill="rgba(0,212,255,.08)" stroke="rgba(0,212,255,.3)" stroke-width="1"/>
+            <text x="95" y="37" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9.5" fill="rgba(0,212,255,.85)">Book an appointment</text>
+            <rect x="90" y="66" width="150" height="32" rx="14" fill="rgba(255,107,71,.08)" stroke="rgba(255,107,71,.3)" stroke-width="1"/>
+            <text x="165" y="85" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9.5" fill="rgba(255,107,71,.85)">AI: Sure! When works?</text>
+            <rect x="20" y="114" width="140" height="32" rx="14" fill="rgba(0,212,255,.08)" stroke="rgba(0,212,255,.3)" stroke-width="1"/>
+            <text x="90" y="133" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9.5" fill="rgba(0,212,255,.85)">Tomorrow, 2PM please</text>
+            <rect x="80" y="158" width="165" height="32" rx="14" fill="rgba(255,107,71,.08)" stroke="rgba(255,107,71,.3)" stroke-width="1"/>
+            <text x="162" y="177" text-anchor="middle" font-family="Outfit,sans-serif" font-size="9.5" fill="rgba(255,107,71,.85)">AI: Confirmed ✓ Email sent!</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="proj-card rev d1">
+        <div class="proj-type">Social Media Automation</div>
+        <h3>Facebook &amp; Instagram AI Chatbot</h3>
+        <p>AI chatbot systems integrated with Meta platforms for automated customer engagement across Facebook Messenger and Instagram DM — from inquiry to conversion.</p>
+        <div class="proj-feats">
+          <div class="proj-feat">Auto-reply to inquiries and comments</div>
+          <div class="proj-feat">Lead capture and qualification</div>
+          <div class="proj-feat">Automated follow-up sequences</div>
+          <div class="proj-feat">CRM data collection and logging</div>
+        </div>
+        <div class="proj-stack">
+          <span class="stack-tag">n8n</span><span class="stack-tag">OpenAI</span>
+          <span class="stack-tag">Meta Webhooks</span><span class="stack-tag">Facebook Graph API</span><span class="stack-tag">Instagram API</span>
+        </div>
+      </div>
+
+      <div class="proj-card rev d2">
+        <div class="proj-type">Lead Generation System</div>
+        <h3>AI Lead Generation &amp; Qualification Workflow</h3>
+        <p>End-to-end lead automation pipeline — from first contact to qualified follow-up, with no manual work required at any stage of the funnel.</p>
+        <div class="proj-feats">
+          <div class="proj-feat">Automatic lead capture from multiple sources</div>
+          <div class="proj-feat">AI-powered lead qualification and scoring</div>
+          <div class="proj-feat">Instant automated response sequences</div>
+          <div class="proj-feat">Google Sheets and CRM integration</div>
+        </div>
+        <div class="proj-stack">
+          <span class="stack-tag">n8n</span><span class="stack-tag">Webhooks</span>
+          <span class="stack-tag">Google Sheets</span><span class="stack-tag">OpenAI</span><span class="stack-tag">Gmail API</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sh-num rev">07 / Contact</div>
+    <div class="contact-grid">
+      <div class="rev">
+        <h2 class="contact-hl">Ready to automate your <em>business?</em></h2>
+        <p class="contact-sub">Whether you need an AI chatbot, a workflow that saves your team hours each week, or a complete business automation system — let's build it. I respond within 24 hours.</p>
+        <div class="c-links">
+          <a href="mailto:Raymondborja21@gmail.com" class="c-link">
+            <div class="c-icon">✉</div>
+            <div><span class="c-label">Email</span><span class="c-val">Raymondborja21@gmail.com</span></div>
+          </a>
+          <a href="tel:+639270664056" class="c-link">
+            <div class="c-icon">📱</div>
+            <div><span class="c-label">Phone / WhatsApp</span><span class="c-val">+63 927-066-4056</span></div>
+          </a>
+          <a href="https://www.linkedin.com/in/raymond-borja-2bb4a5255/" target="_blank" rel="noopener" class="c-link">
+            <div class="c-icon">🔗</div>
+            <div><span class="c-label">LinkedIn</span><span class="c-val">linkedin.com/in/raymond-borja-2bb4a5255</span></div>
+          </a>
+        </div>
+      </div>
+      <form class="cf rev d2" id="cform">
+        <div class="fg">
+          <label class="fl" for="name">Your Name</label>
+          <input class="fi" id="name" type="text" name="name" placeholder="John Smith" required>
+        </div>
+        <div class="fg">
+          <label class="fl" for="email">Email Address</label>
+          <input class="fi" id="email" type="email" name="email" placeholder="john@company.com" required>
+        </div>
+        <div class="fg">
+          <label class="fl" for="svc">Service Needed</label>
+          <input class="fi" id="svc" type="text" name="service" placeholder="e.g. AI Chatbot, Workflow Automation…">
+        </div>
+        <div class="fg">
+          <label class="fl" for="msg">Message</label>
+          <textarea class="ft" id="msg" name="message" placeholder="Tell me about your project…" required></textarea>
+        </div>
+        <button type="submit" class="btn-send" id="sendBtn">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-copy">© 2026 Raymond Borja · AI Automation Specialist</div>
+    <div class="foot-links">
+      <a href="https://www.linkedin.com/in/raymond-borja-2bb4a5255/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:Raymondborja21@gmail.com">Email</a>
+      <a href="tel:+639270664056">Phone</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+// Mobile menu
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mobMenu');
+const mobClose = document.getElementById('mobClose');
+burger.addEventListener('click', () => mob.classList.add('open'));
+mobClose.addEventListener('click', () => mob.classList.remove('open'));
+mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+// Scroll reveal
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+
+// Contact form
+document.getElementById('cform').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = document.getElementById('sendBtn');
+  btn.textContent = 'Message Sent ✓';
+  btn.style.background = '#00d4ff';
+  setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+});
+</script>
+</body>
+</html>

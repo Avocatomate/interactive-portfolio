@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ─────────────────────────────────────── */
+:root {
+  --black:  #080809;
+  --cyan:   #00d4ff;
+  --coral:  #ff6b47;
+
+  /* Dark mode (default) */
+  --bg:     #080809;
+  --s1:     #111112;
+  --s2:     #1a1a1c;
+  --s3:     #242426;
+  --border: rgba(255, 255, 255, 0.08);
+  --txt:    #f0f0ef;
+  --txt2:   #9a9a9a;
+  --txt3:   #606060;
+}
+
+[data-theme="light"] {
+  --bg:     #f4f4ef;
+  --s1:     #ffffff;
+  --s2:     #e8e8e3;
+  --s3:     #dcdcd7;
+  --border: rgba(0, 0, 0, 0.08);
+  --txt:    #0a0a0a;
+  --txt2:   #555555;
+  --txt3:   #888888;
+  --cyan:   #0099cc;
+  --coral:  #cc4400;
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; }
+
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--txt);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--cyan);
+  color: #000;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* ── Markdown prose inside chat bubbles ───────────────── */
+.prose-chat { line-height: 1.75; word-break: break-word; }
+
+.prose-chat p { margin: 0; }
+.prose-chat p + p { margin-top: 0.6rem; }
+
+.prose-chat strong {
+  color: #00d4ff;
+  font-weight: 700;
+}
+
+.prose-chat li,
+.prose-chat p,
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3 {
+  color: #00d4ff;
+}
+
+.prose-chat em { opacity: 0.82; }
+
+.prose-chat ul,
+.prose-chat ol {
+  padding-left: 1.25rem;
+  margin: 0.4rem 0;
+}
+.prose-chat li { margin: 0.2rem 0; }
+
+.prose-chat code {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.83em;
+  background: rgba(0, 212, 255, 0.09);
+  border: 1px solid rgba(0, 212, 255, 0.18);
+  color: var(--cyan);
+  padding: 0.1em 0.38em;
+  border-radius: 4px;
+}
+[data-theme="light"] .prose-chat code {
+  background: rgba(0, 153, 204, 0.08);
+  border-color: rgba(0, 153, 204, 0.2);
+}
+
+.prose-chat pre {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  margin: 0.6rem 0;
+}
+.prose-chat pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--txt);
+  font-size: 0.82em;
+}
+
+.prose-chat a {
+  color: var(--cyan);
+  text-decoration-color: rgba(0, 212, 255, 0.3);
+  text-underline-offset: 3px;
+}
+.prose-chat a:hover { text-decoration: underline; }
+
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3 {
+  font-weight: 700;
+  color: var(--txt);
+  margin: 0.6rem 0 0.3rem;
+}
+
+.prose-chat blockquote {
+  border-left: 2px solid var(--cyan);
+  padding-left: 0.9rem;
+  color: var(--txt2);
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+/* ── Input placeholder color ──────────────────────────── */
+.chat-input::placeholder {
+  color: #c8c4bc;
+  opacity: 1;
+}
+
+/* ── Input focus ring ──────────────────────────────────── */
+.chat-input {
+  border-color: rgba(0, 212, 255, 0.45) !important;
+  box-shadow: 0 0 16px rgba(0,212,255,0.42), 0 0 35px rgba(0,212,255,0.25), 0 0 70px rgba(0,212,255,0.1) !important;
+}
+.chat-input:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.7) !important;
+  box-shadow: 0 0 20px rgba(0,212,255,0.6), 0 0 40px rgba(0,212,255,0.35), 0 0 80px rgba(0,212,255,0.15) !important;
+}
